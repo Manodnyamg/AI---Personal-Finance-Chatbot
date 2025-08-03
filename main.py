@@ -114,9 +114,9 @@ if st.session_state.page == "landing":
     st.markdown("""
     <div style='margin-top: 1rem; background-color: #e9f3fb; padding: 10px 20px; border-radius: 8px;'>
         <strong> Tips for First-Time Users:</strong><br>
-        • Start with the Risk Profile quiz to get a personalized assessment of your investment style.
-        • Next, use the Retirement Planner and Portfolio Simulation to see how your profile can impact your long-term goals.
-        • Use the ETFs Calculator to explore specific, low-cost investment options that align with your plan.
+        • Start with the Risk Profile quiz to get a personalized assessment of your investment style.<br>
+        • Next, use the Retirement Planner and Portfolio Simulation to see how your profile can impact your long-term goals.<br>
+        • Use the ETFs Calculator to explore specific, low-cost investment options that align with your plan.<br>
         • Need help? Visit the Support tab anytime!
     </div>
     """, unsafe_allow_html=True)
