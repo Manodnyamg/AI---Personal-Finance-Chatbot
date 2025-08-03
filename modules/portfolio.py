@@ -335,7 +335,7 @@ def run(session):
         total_nominal_contributions = 0
         curr_income_total = income
         for year in range(years_to_retire):
-            total_nominal_contributions += curr_income_total * contribution_rate * 12
+            total_nominal_contributions += curr_income_total * contribution_rate
             curr_income_total *= (1 + avg_growth)
 
         st.markdown(
