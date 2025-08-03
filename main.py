@@ -113,11 +113,11 @@ if st.session_state.page == "landing":
     # 💡 Tips for Users (placed inside nav container, styled to appear below buttons)
     st.markdown("""
     <div style='margin-top: 1rem; background-color: #e9f3fb; padding: 10px 20px; border-radius: 8px;'>
-        <strong>💡 Tips for First-Time Users:</strong><br>
-        • Start with the <em>Retirement Planner</em> to get a personalized projection.<br>
-        • Use the <em>ETFs Calculator</em> to explore low-risk investment options.<br>
-        • The <em>Portfolio Simulation</em> helps visualize your future fund performance.<br>
-        • Need help? Visit the <em>Support</em> tab anytime!
+        <strong> Tips for First-Time Users:</strong><br>
+        • Start with the Risk Profile quiz to get a personalized assessment of your investment style.
+        • Next, use the Retirement Planner and Portfolio Simulation to see how your profile can impact your long-term goals.
+        • Use the ETFs Calculator to explore specific, low-cost investment options that align with your plan.
+        • Need help? Visit the Support tab anytime!
     </div>
     """, unsafe_allow_html=True)
 
