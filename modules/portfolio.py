@@ -7,7 +7,17 @@ import os
 
 # --- Data Loading and Helper Functions ---
 def load_salary_data():
-    csv_path = os.path.join("assets", "earnings_data.csv")
+    """
+    Loads salary data from a CSV file using a robust, absolute path.
+    """
+    # This gets the directory of the current Python file
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct the full path to your CSV file
+    # The '..' goes up one directory from 'modules' to the project root
+    # Then it goes into the 'Assets' folder
+    csv_path = os.path.join(current_dir, '..', 'Assets', 'earnings_data.csv')
+
     df = pd.read_csv(csv_path)
     df = df.dropna()
     df['Value'] = df['Value'].astype(float)
