@@ -6,3 +6,4 @@ openai
 plotly
 yfinance
 matplotlib
+numpy_financial
