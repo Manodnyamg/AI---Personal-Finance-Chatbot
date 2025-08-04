@@ -1,5 +1,6 @@
 import streamlit as st
 from modules import retirement, risk, etf, portfolio, support
+import os
 
 # Set page config
 st.set_page_config(page_title="Personal Finance App", page_icon="💰", layout="wide")
@@ -19,35 +20,37 @@ def go(page, rp_step=None):
     st.session_state.page = page
     if rp_step is not None:
         st.session_state.rp_step = rp_step
+    st.rerun()  # Force immediate rerun
 
 # --- Navigation Bar --- (with tips inside the container)
 st.markdown('<div class="nav-container">', unsafe_allow_html=True)
 
-col_logo, col_nav = st.columns([1, 3])
+col_logo, col_spacer, col_nav = st.columns([0.2, 0.3, 2.5])
 with col_logo:
-    if st.button("💰 FinSight", key="home_logo_button"):
-        go("landing")
-    st.markdown("""
-    <style>
-    [data-testid="stButton"][key="home_logo_button"] > button {
-        font-size: 24px;
-        font-weight: bold;
-        color: #0068c9;
-        background: none;
-        border: none;
-        font-family: 'Times New Roman', serif;
-        padding: 0;
-        margin-top: -8px;
-        margin-bottom: -8px;
-        box-shadow: none;
-    }
-    [data-testid="stButton"][key="home_logo_button"] > button:hover {
-        text-decoration: underline;
-        cursor: pointer;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
+    # Only show FinSight button if NOT on landing page
+    if st.session_state.page != "landing":
+        if st.button("🏠", key="home_logo_button"):
+            go("landing")
+        st.markdown("""
+        <style>
+        [data-testid="stButton"][key="home_logo_button"] > button {
+            font-size: 30px;
+            font-weight: bold;
+            color: #0068c9;
+            background: none;
+            border: none;
+            font-family: 'Times New Roman', serif;
+            margin-top: 1rem;
+            padding: 10px 20px;
+            border-radius: 8px;        
+            box-shadow: none;
+        }
+        [data-testid="stButton"][key="home_logo_button"] > button:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
 with col_nav:
     nav1, nav2, nav3, nav4 = st.columns(4)
@@ -76,50 +79,84 @@ with col_nav:
                 go("support")
             st.markdown('</div>', unsafe_allow_html=True)
 
+
 # --- Page Routing ---
 if st.session_state.page == "landing":
-    st.markdown("""
-        <div style='color: #0068c9; padding: 100px 0px 75px 0px; font-size: 2.5rem; 
-                    font-weight: bold; text-align: center; margin-bottom: 2rem;'>
-            Plan. Invest. Retire — Smarter.
+    # Create two columns: 65% for content, 35% for image
+    content_col, image_col = st.columns([0.65, 0.35])
+    
+    with content_col:
+        st.markdown("""
+            <div style='color: #0068c9; padding: 80px 0px 40px 0px; font-size: 2.8rem; 
+                        font-weight: bold; text-align: center; margin-bottom: 2rem; line-height: 1.2;'>
+                Plan. Invest. Retire — Smarter.
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Create centered column for button (half width)
+        button_col1, button_col2, button_col3 = st.columns([1, 2, 1])
+        with button_col2:
+            # Get Started Button
+            st.button("Get Started to assess your risk tolerance",
+                      on_click=lambda: go("risk"),
+                      use_container_width=True,
+                      key="risk_button")
+
+        # Button styling
+        st.markdown("""
+            <style>
+            [data-testid="stButton"][data-widget-id="risk_button"] > button {
+                background-color: #0068c9 !important;
+                color: white !important;
+                border: 2px solid white !important;
+                font-weight: bold !important;
+                font-size: 16px !important;
+                border-radius: 8px !important;
+                height: 50px !important;
+                width: 100% !important;
+                text-align: center !important;
+                margin-bottom: 2rem !important;
+            }
+            [data-testid="stButton"][data-widget-id="risk_button"] > button:hover {
+                background-color: #004494 !important;
+                border: 2px solid white !important;
+            }
+            </style>
+        """, unsafe_allow_html=True)
+
+        # Tips section
+        st.markdown("""
+        <div style='margin-top: 1.5rem; background-color: #e9f3fb; padding: 15px; border-radius: 10px; border-left: 4px solid #0068c9;'>
+            <strong style='color: #0068c9; font-size: 14px;'>💡 Tips for First-Time Users:</strong><br>
+            <div style='line-height: 1.5; color: #2d3748; font-size: 13px; margin-top: 8px;'>
+                • Start with the <em style='color: #0068c9; font-weight: 600;'>Risk Profile</em> or <em style='color: #0068c9; font-weight: 600;'>Retirement Planner</em><br>
+                • Use the <em style='color: #0068c9; font-weight: 600;'>ETFs Calculator</em> to explore investment options<br>
+                • <em style='color: #0068c9; font-weight: 600;'>Portfolio Simulation</em> helps visualize future performance<br>
+                • Need help? Visit the <em style='color: #0068c9; font-weight: 600;'>Support</em> tab anytime!
+            </div>
         </div>
-    """, unsafe_allow_html=True)
-
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        st.button("Get Started to Assess Your Risk Tolerance",
-                  on_click=lambda: go("risk"),
-                  use_container_width=True,
-                  key="risk_button")
-
-    st.markdown("""
-        <style>
-        [data-testid="stButton"][data-widget-id="risk_button"] > button {
-            background-color: black !important;
-            color: white !important;
-            font-weight: bold !important;
-            font-size: 16px !important;
-            border-radius: 8px !important;
-            height: 50px !important;
-            width: 100% !important;
-            text-align: center !important;
-        }
-        [data-testid="stButton"][data-widget-id="risk_button"] > button:hover {
-            background-color: #222 !important;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # 💡 Tips for Users (placed inside nav container, styled to appear below buttons)
-    st.markdown("""
-    <div style='margin-top: 1rem; background-color: #e9f3fb; padding: 10px 20px; border-radius: 8px;'>
-        <strong> Tips for First-Time Users:</strong><br>
-        • Start with the Risk Profile quiz to get a personalized assessment of your investment style.<br>
-        • Next, use the Retirement Planner and Portfolio Simulation to see how your profile can impact your long-term goals.<br>
-        • Use the ETFs Calculator to explore specific, low-cost investment options that align with your plan.<br>
-        • Need help? Visit the Support tab anytime!
-    </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
+    
+    with image_col:
+        # Add more top padding to start image 1 line below the heading
+        st.markdown("<div style='padding-top: 120px;'></div>", unsafe_allow_html=True)
+        
+        # Display the hero image (scaled down to half size)
+        try:
+            st.image("assets/hero_image.png", use_container_width =True)
+        except:
+            # Fallback if image not found
+            st.markdown("""
+            <div style='background-color: #f7fafc; border: 2px dashed #cbd5e0; border-radius: 12px; 
+                        height: 200px; width: 300px; display: flex; align-items: center; justify-content: center;
+                        color: #718096; font-size: 14px; text-align: center;'>
+                <div>
+                    📱💻<br>
+                    Hero Image<br>
+                    <small>(Save as assets/hero_image.png)</small>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
     st.markdown('</div>', unsafe_allow_html=True)  # Close nav-container
 
@@ -137,3 +174,17 @@ elif st.session_state.page == "portfolio":
 
 elif st.session_state.page == "support":
     support.run(st.session_state)
+
+# --- Render the Azure OpenAI Chatbot Popup on every page ---
+# Use try-except to handle import issues gracefully
+try:
+    from modules.chatbot_popup import render_popup_chatbot
+    render_popup_chatbot()
+except ImportError as e:
+    # Fallback if chatbot_popup module is not found
+    st.error(f"Chatbot module not found: {e}")
+    st.info("Please ensure 'chatbot_popup.py' is in the modules folder.")
+except Exception as e:
+    # Handle any other errors gracefully
+    st.error(f"Error loading chatbot: {e}")
+    # You can add a simple fallback chatbot here if needed
