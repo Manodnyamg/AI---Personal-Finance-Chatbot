@@ -267,7 +267,6 @@ def show_start_screen(session):
         if st.button("Start the quiz", key="start_quiz", use_container_width=True):
             st.session_state.risk_page = 'quiz'
             st.session_state.current_question = 0
-            st.rerun()
     
     with col2:
         st.write("""
@@ -345,7 +344,6 @@ def show_quiz(session):
             if st.session_state.current_question > 0:
                 if st.button("← Previous", use_container_width=True):
                     st.session_state.current_question -= 1
-                    st.rerun()
         
         with nav_col2:
             # For number input, answer is always valid; for radio, check if selection is made
@@ -360,12 +358,10 @@ def show_quiz(session):
                     st.session_state.risk_page = 'results'
                 else:
                     st.session_state.current_question += 1
-                st.rerun()
         
         with nav_col4:
             if st.button("← Back to Home", key="back_to_home_quiz", use_container_width=True):
                 session.page = "landing"
-                st.rerun()
 
 def process_results():
     """Process the quiz results using backend mapping"""
