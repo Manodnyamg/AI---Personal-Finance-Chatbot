@@ -21,7 +21,7 @@ def init_azure_client():
 
 def create_system_prompt():
     """Create system prompt based on user profile from ALL sections"""
-    base_prompt = """You are a knowledgeable financial advisor assistant for FinSight app. 
+    base_prompt = """You are a knowledgeable financial advisor assistant for Wealth Wisperer app. 
     Provide helpful, accurate financial advice. Keep responses conversational and under 3 paragraphs.
     
     You help with: investment strategies, retirement planning, budgeting, ETFs, portfolio advice.
@@ -186,9 +186,9 @@ def render_popup_chatbot():
     if not st.session_state.chat_initialized:
         risk_profile = getattr(st.session_state, 'risk_profile', None)
         if risk_profile:
-            welcome = f"👋 Hello! I'm your FinSight assistant. I see you have a **{risk_profile}** profile. How can I help with your finances today?"
+            welcome = f"👋 Hello! I'm your AI assistant. I see you have a **{risk_profile}** profile. How can I help with your finances today?"
         else:
-            welcome = "👋 Welcome to FinSight! I'm your AI financial assistant. I can help with investments, retirement planning, budgeting, and more. What would you like to know?"
+            welcome = "👋 Welcome to Wealth Wisperer! I'm your AI financial assistant. I can help with investments, retirement planning, budgeting, and more. What would you like to know?"
         
         st.session_state.chat_messages = [{"role": "assistant", "content": welcome}]
         st.session_state.chat_initialized = True
@@ -258,7 +258,7 @@ def render_popup_chatbot():
     components.html(chatbot_html, height=0)
     
     # Hidden button for state management
-    if st.button("Chat with our AI Finance Assistant", key="chat_toggle_hidden", help="Ask Anything – Our AI Chatbot is Here to Help"):
+    if st.button("Ask SAM", key="chat_toggle_hidden", help="Ask Anything – SAM is Here to Help"):
         st.session_state.chatbot_open = not st.session_state.chatbot_open
         st.rerun()
     
