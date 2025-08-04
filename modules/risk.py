@@ -268,7 +268,7 @@ def show_start_screen(session):
         if st.button("Start the quiz", key="start_quiz", use_container_width=True):
             st.session_state.risk_page = 'quiz'
             st.session_state.current_question = 0
-            #st.rerun()
+            st.rerun()
     
     with col2:
         st.write("""
@@ -481,4 +481,5 @@ def run(session):
     elif st.session_state.risk_page == 'quiz':
         show_quiz(session)
     elif st.session_state.risk_page == 'results':
+
         show_results(session)
