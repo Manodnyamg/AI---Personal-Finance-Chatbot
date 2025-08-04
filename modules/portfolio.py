@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-#import numpy_financial as npf
+import numpy_financial as npf
 import os
 
 # --- Data Loading and Helper Functions ---
@@ -655,3 +655,4 @@ def run(session):
         </style>
 
         """, unsafe_allow_html=True)
+
