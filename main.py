@@ -143,7 +143,7 @@ if st.session_state.page == "landing":
         
         # Display the hero image (scaled down to half size)
         try:
-            st.image("assets/hero_image.png", use_column_width=True)
+            st.image("assets/hero_image.png", use_container_width =True)
         except:
             # Fallback if image not found
             st.markdown("""
@@ -188,3 +188,4 @@ except Exception as e:
     # Handle any other errors gracefully
     st.error(f"Error loading chatbot: {e}")
     # You can add a simple fallback chatbot here if needed
+
