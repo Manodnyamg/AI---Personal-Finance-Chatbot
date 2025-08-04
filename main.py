@@ -79,7 +79,6 @@ with col_nav:
                 go("support")
             st.markdown('</div>', unsafe_allow_html=True)
 
-
 # --- Page Routing ---
 if st.session_state.page == "landing":
     # Create two columns: 65% for content, 35% for image
@@ -138,22 +137,28 @@ if st.session_state.page == "landing":
         """, unsafe_allow_html=True)
     
     with image_col:
-        # Add more top padding to start image 1 line below the heading
+        # Add top padding to align the image with the content
         st.markdown("<div style='padding-top: 120px;'></div>", unsafe_allow_html=True)
         
-        # Display the hero image (scaled down to half size)
-        try:
-            st.image("assets/hero_image.png", use_container_width =True)
-        except:
-            # Fallback if image not found
+        # Get the absolute path to the directory where the script is running
+        current_dir = os.path.dirname(__file__)
+        # Construct the full path to the image file
+        image_path = os.path.join(current_dir, "assets", "hero_image.png")
+        
+        # Check if the file exists at the constructed path
+        if os.path.exists(image_path):
+            # Display the image using the absolute path
+            st.image(image_path, use_container_width=True)
+        else:
+            # Fallback if the image is still not found
+            st.warning(f"Image not found at path: {image_path}")
             st.markdown("""
-            <div style='background-color: #f7fafc; border: 2px dashed #cbd5e0; border-radius: 12px; 
+            <div style='background-color: #f7fafc; border: 2px dashed #cbd5e0; border-radius: 12px;
                         height: 200px; width: 300px; display: flex; align-items: center; justify-content: center;
                         color: #718096; font-size: 14px; text-align: center;'>
                 <div>
-                    📱💻<br>
-                    Hero Image<br>
-                    <small>(Save as assets/hero_image.png)</small>
+                    Image File Missing<br>
+                    <small>(Check your 'assets' folder and file name)</small>
                 </div>
             </div>
             """, unsafe_allow_html=True)
