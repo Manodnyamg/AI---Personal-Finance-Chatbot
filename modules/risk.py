@@ -267,6 +267,7 @@ def show_start_screen(session):
         if st.button("Start the quiz", key="start_quiz", use_container_width=True):
             st.session_state.risk_page = 'quiz'
             st.session_state.current_question = 0
+            st.rerun()
     
     with col2:
         st.write("""
@@ -284,8 +285,9 @@ def show_start_screen(session):
     
     col_back1, col_back2, col_back3 = st.columns([2, 1, 2])
     #with col_back2:
-    #   if st.button("← Back to Home", key="back_to_home_start", use_container_width=True):
-    #       session.page = "landing"
+    #    if st.button("← Back to Home", key="back_to_home_start", use_container_width=True):
+    #        session.page = "landing"
+    #        st.rerun()
 
 def show_quiz(session):
     if st.session_state.current_question < len(questions):
@@ -343,6 +345,7 @@ def show_quiz(session):
             if st.session_state.current_question > 0:
                 if st.button("← Previous", use_container_width=True):
                     st.session_state.current_question -= 1
+                    st.rerun()
         
         with nav_col2:
             # For number input, answer is always valid; for radio, check if selection is made
@@ -357,10 +360,12 @@ def show_quiz(session):
                     st.session_state.risk_page = 'results'
                 else:
                     st.session_state.current_question += 1
+                st.rerun()
         
         with nav_col4:
             if st.button("← Back to Home", key="back_to_home_quiz", use_container_width=True):
                 session.page = "landing"
+                st.rerun()
 
 def process_results():
     """Process the quiz results using backend mapping"""
@@ -443,10 +448,12 @@ def show_results(session):
             st.session_state.risk_page = 'start'
             st.session_state.current_question = 0
             st.session_state.answers = {}
+            st.rerun()
     
     with col3:
         if st.button("← Back to Home", key="back_to_home_results", use_container_width=True):
             session.page = "landing"
+            st.rerun()
 
     # Add spacing after buttons
     st.markdown("<br>", unsafe_allow_html=True)
