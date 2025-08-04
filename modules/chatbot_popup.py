@@ -1,6 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 from openai import AzureOpenAI
+import os
 
 def init_azure_client():
     """Initialize Azure OpenAI client"""
@@ -372,4 +373,5 @@ def show_chat_sidebar():
                     st.session_state.chat_messages.append({"role": "assistant", "content": response})
                 
                 # Rerun to update the chat
+
                 st.rerun()
