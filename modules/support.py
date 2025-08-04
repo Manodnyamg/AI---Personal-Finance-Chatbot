@@ -75,9 +75,9 @@ def run(session):
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("""
-        📧 **Email**: support@finsightapp.com  
+        📧 **Email**: support@WealthWispererapp.com  
         ☎️ **Phone**: +353 1234 5678  
-        💼 **LinkedIn**: [FinSight Team](https://linkedin.com)
+        💼 **LinkedIn**: [Wealth Wisperer Team](https://linkedin.com)
 
         We're happy to hear your feedback or questions!
         """)
@@ -90,4 +90,5 @@ def run(session):
             submitted = st.form_submit_button("Send")
 
             if submitted:
+
                 st.success("✅ Thank you! Your message has been received.")
