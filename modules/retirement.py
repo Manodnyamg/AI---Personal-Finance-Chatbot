@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 import os
 import plotly.graph_objs as go
+import streamlit.components.v1 as components
+
 
 def load_salary_data():
     """
@@ -71,50 +73,94 @@ def run(session):
 
     if session.rp_step == 1:
         st.markdown("""
-        <div style='font-size:30px; font-weight:700; margin-bottom:20px;color:#0068c9;font-family: Times New Roman;'>
+        <div style='font-size:25px; font-weight:700; margin-bottom:20px;color:#0068c9;font-family: Times New Roman;'>
         Let’s make sure you’re on track to enjoy the future you’re working for. Tell us a bit about yourself to get started.
         </div>""", unsafe_allow_html=True)
-        st.markdown("<div style='font-size:25px; font-weight:700;'>1. What is your current age?</div>", unsafe_allow_html=True)
-        fd["age"] = st.slider("", 18, 60, 30, 1)
+        st.subheader("1. What is your current age?")
+        fd["age"] = st.slider(
+        "",
+        18, 60,
+        fd.get("age", 30),  # This makes it "sticky": uses the previous value if present, else 30
+        1
+        )
         button_row(show_back=False)
 
     elif session.rp_step == 2:
-        st.markdown("<div style='font-size:25px; font-weight:700;'>2. At what age do you plan to retire?</div>", unsafe_allow_html=True)
+        st.subheader("2. At what age do you plan to retire?")
         st.markdown("""
         <div style='font-size:15px; font-weight:700; font-family: Times New Roman; margin-bottom: 20px;'>
         (According to the CSO, 68% of workers expect to retire between the ages of 60 and 69. Feel free to adjust the slider to match your plans.)
         </div>""", unsafe_allow_html=True)
-        fd["retirement_age"] = st.slider("", 60, 75, 65, 1)
+        #fd["retirement_age"] = st.slider("", 60, 75, 65, 1)
+        fd["retirement_age"] = st.slider(
+        "",
+        60, 75,
+        fd.get("retirement_age", 65),  # This makes it "sticky": uses the previous value if present, else 30
+        1
+        )
         button_row()
 
     elif session.rp_step == 3:
-        st.markdown("<div style='font-size:25px; font-weight:700;'>3. What is your annual income (€)?</div>", unsafe_allow_html=True)
-        fd["income"] = st.slider("", 25, 500, 60, 1, format="€%dK") * 1000
+        st.subheader("3. What is your annual income (€)?")
+        #fd["income"] = st.slider("", 25, 500, 60, 1, format="€%dK") * 1000
+        fd["income"] = st.slider(
+        "",
+        25, 500,
+        fd.get("income", 60_000) // 1000 if fd.get("income") else 60,
+        1, format="€%dK"
+        ) * 1000
         button_row()
 
     elif session.rp_step == 4:
-        st.markdown("<div style='font-size:25px; font-weight:700;'>4. What is the current value of your existing pension pot?</div>", unsafe_allow_html=True)
-        fd["pension_pot"] = st.slider("", 0, 500, 0, 5, format="€%dK") * 1000
+        st.subheader("4. What is the current value of your existing pension pot?")
+        #fd["pension_pot"] = st.slider("", 0, 500, 0, 5, format="€%dK") * 1000
+        fd["pension_pot"] = st.slider(
+        "",
+        0, 500,
+        fd.get("pension_pot", 0) // 1000 if fd.get("pension_pot") else 0,
+        5, format="€%dK"
+        ) * 1000
         button_row()
 
     elif session.rp_step == 5:
-        st.markdown("<div style='font-size:25px; font-weight:700;'>5. What % of your salary do you contribute to pension?</div>", unsafe_allow_html=True)
-        fd["contribution"] = st.slider("", 0, 40, 15, 1, format="%d%%")
+        st.subheader("5. What percentage of your annual salary do you contribute to your pension?")
+        #fd["contribution"] = st.slider("", 0, 40, 15, 1, format="%d%%")
+        fd["contribution"] = st.slider(
+        "",
+        0, 40,
+        fd.get("contribution", 15),
+        1, format="%d%%"
+        )
         button_row()
 
     elif session.rp_step == 6:
-        st.markdown("<div style='font-size:25px; font-weight:700;'>6. What sector do you work in?</div>", unsafe_allow_html=True)
+        st.subheader("6. What sector do you work in?")
         sectors = salary_df["NACE Sector"].dropna().unique().tolist()
-        fd["sector"] = st.selectbox("Choose your sector", sectors)
+        #fd["sector"] = st.selectbox("Choose your sector", sectors)
+        sectors = salary_df["NACE Sector"].dropna().unique().tolist()
+        fd["sector"] = st.selectbox(
+        "Choose your sector",
+        sectors,
+        index=sectors.index(fd.get("sector")) if fd.get("sector") in sectors else 0
+        )
         button_row()
 
     elif session.rp_step == 7:
-        st.markdown("<div style='font-size:25px; font-weight:700;'>7. What is your target monthly retirement income?</div>", unsafe_allow_html=True)
+        st.subheader("7. What is your target monthly retirement income?")
         st.markdown("""
         <div style='font-size:15px; font-weight:700; font-family: Times New Roman; margin-bottom: 20px;'>
         (Many aim for around 40% of their current income. OECD reports Ireland’s average net pension replacement rate is 36%–40%.)
         </div>""", unsafe_allow_html=True)
-        fd["target_income"] = int(st.slider("", 1.2, 5.0, 2.0, 0.1, format="€%.1fK") * 1000)
+        #fd["target_income"] = int(st.slider("", 1.2, 5.0, 2.0, 0.1, format="€%.1fK") * 1000)
+        fd["target_income"] = int(
+        st.slider(
+        "",
+        1.2, 5.0,
+        fd.get("target_income", 2000) / 1000 if fd.get("target_income") else 2.0,
+        0.1,
+        format="€%.1fK"
+        ) * 1000
+        )
         button_row(submit=True)
 
     elif session.rp_step == 8:
@@ -276,15 +322,18 @@ def run(session):
           st.markdown(custom_info, unsafe_allow_html=True)
           st.markdown(custom_info_income, unsafe_allow_html=True)
 
-        st.button("← Start Over", on_click=lambda: run_reset())
+        col_left, col_right = st.columns([1, 2])
 
-        st.markdown("<br>", unsafe_allow_html=True)
+        with col_left:
+         st.button("← Start Over", on_click=lambda: run_reset(), key="start_over_btn")
 
-        if st.button("Discover how different equity allocations affect your chances of reaching your retirement goals"):
+        with col_right:
+         if st.button("Explore Portfolio Simulation to see how equity allocation impacts your retirement", key="portfolio_btn"):
           st.session_state.page = "portfolio"
           st.rerun()
 
+    
 def run_reset():
-    st.session_state.page = "landing"
-    st.session_state.rp_step = 1
+    st.session_state.rp_step = 1         
     st.session_state.form_data = {}
+    
