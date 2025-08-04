@@ -251,17 +251,21 @@ def run(session):
 
     # --- Second Row: Monte Carlo Projection Chart (Left) and Summary (Right) ---
     st.markdown("---") # Optional: Another horizontal rule
-    st.subheader("Monte Carlo Simulation Results") # New subheader for the results section
+    st.markdown("""
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <h3 style="margin: 0; margin-right: 8px;">Monte Carlo Simulation Results</h3>
+        <span style="font-size: 14px; color: #0068c9; cursor: help;" title="Runs thousands of scenarios to show possible future outcomes based on historical patterns.">ⓘ</span>
+    </div>
+    """, unsafe_allow_html=True)
 
     mc_chart_col, mc_summary_col = st.columns(2)
-
     # Run Monte Carlo for the selected duration
     price_paths, projected_returns = monte_carlo_simulation(default_data, months)
 
     if projected_returns is None:
         mc_summary_col.warning("Insufficient or invalid data for Monte Carlo simulation. Please select a valid ETF and period.")
         with mc_chart_col:
-            st.info("No data to plot Monte Carlo projections.")
+             st.info("No data to plot Monte Carlo projections.")
     else:
         median_return = np.median(projected_returns)
         lower_pct = np.percentile(projected_returns, 5)
@@ -286,8 +290,10 @@ def run(session):
                         - Optimistic case (top 5%):
                           Return could be as high as **{upper_pct:.2%}**
                         """)
-
-            # Calculate FV based on investment type and median return
+    #st.subheader("Monte Carlo Simulation Results") # New subheader for the results section
+    
+        
+                  # Calculate FV based on investment type and median return
             if investment_type == "Monthly Installment":
                 # Assuming the median_return is the total return for the 'months' period
                 # We need an effective monthly rate for compounding monthly investments
@@ -413,6 +419,4 @@ def run(session):
             _This is a placeholder for our upcoming Explainable AI-powered assistant._
             """)
 
-    # --- Back to home ---
-    if st.button("← Back to Home"):
-        session.page = "landing"
+    

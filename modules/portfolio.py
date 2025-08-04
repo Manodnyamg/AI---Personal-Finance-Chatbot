@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
-import numpy_financial as npf
+#import numpy_financial as npf
 import os
 
 # --- Data Loading and Helper Functions ---
@@ -335,7 +335,7 @@ def run(session):
         total_nominal_contributions = 0
         curr_income_total = income
         for year in range(years_to_retire):
-            total_nominal_contributions += curr_income_total * contribution_rate
+            total_nominal_contributions += curr_income_total * contribution_rate * 12
             curr_income_total *= (1 + avg_growth)
 
         st.markdown(
@@ -579,10 +579,6 @@ def run(session):
         st.markdown(f"This represents a surplus of **{surplus_percentage:.1f}%** above your target fund.")
         
     st.divider()
-
-    if st.button("← Back to Home"):
-        session.page = "landing"
-        st.rerun()
 
     # The CSS is updated to apply a larger font size to the entire container
     st.markdown("""
