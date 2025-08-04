@@ -340,7 +340,7 @@ def show_quiz(session):
             if st.session_state.current_question > 0:
                 if st.button("← Previous", use_container_width=True):
                     st.session_state.current_question -= 1
-                    #st.rerun()
+                    st.rerun()
         
         with nav_col2:
             # For number input, answer is always valid; for radio, check if selection is made
@@ -355,7 +355,7 @@ def show_quiz(session):
                     st.session_state.risk_page = 'results'
                 else:
                     st.session_state.current_question += 1
-                #st.rerun()
+                st.rerun()
         
         
 
@@ -440,7 +440,7 @@ def show_results(session):
             st.session_state.risk_page = 'start'
             st.session_state.current_question = 0
             st.session_state.answers = {}
-            #st.rerun()
+            st.rerun()
     
     
 
