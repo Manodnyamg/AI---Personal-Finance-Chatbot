@@ -133,8 +133,8 @@ if st.session_state.page == "landing":
     with image_col:
         st.markdown("<div style='padding-top: 120px;'></div>", unsafe_allow_html=True)
         
-        # ✅ Updated hero image logic with absolute path
-        hero_path = os.path.join(os.path.dirname(__file__), "assets", "hero_image.png")
+        # Updated hero image logic with absolute path
+        hero_path = os.path.join(os.path.dirname(__file__), "Assets", "hero_image.png")
         if os.path.exists(hero_path):
             st.image(hero_path, use_container_width=True)
         else:
@@ -176,3 +176,4 @@ except ImportError as e:
     st.info("Please ensure 'chatbot_popup.py' is in the modules folder.")
 except Exception as e:
     st.error(f"Error loading chatbot: {e}")
+
