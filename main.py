@@ -22,12 +22,11 @@ def go(page, rp_step=None):
         st.session_state.rp_step = rp_step
     st.rerun()  # Force immediate rerun
 
-# --- Navigation Bar --- (with tips inside the container)
+# --- Navigation Bar ---
 st.markdown('<div class="nav-container">', unsafe_allow_html=True)
 
 col_logo, col_spacer, col_nav = st.columns([0.2, 0.3, 2.5])
 with col_logo:
-    # Only show FinSight button if NOT on landing page
     if st.session_state.page != "landing":
         if st.button("🏠", key="home_logo_button"):
             go("landing")
@@ -79,10 +78,8 @@ with col_nav:
                 go("support")
             st.markdown('</div>', unsafe_allow_html=True)
 
-
 # --- Page Routing ---
 if st.session_state.page == "landing":
-    # Create two columns: 65% for content, 35% for image
     content_col, image_col = st.columns([0.65, 0.35])
     
     with content_col:
@@ -93,16 +90,13 @@ if st.session_state.page == "landing":
             </div>
         """, unsafe_allow_html=True)
         
-        # Create centered column for button (half width)
         button_col1, button_col2, button_col3 = st.columns([1, 2, 1])
         with button_col2:
-            # Get Started Button
             st.button("Get Started to assess your risk tolerance",
                       on_click=lambda: go("risk"),
                       use_container_width=True,
                       key="risk_button")
 
-        # Button styling
         st.markdown("""
             <style>
             [data-testid="stButton"][data-widget-id="risk_button"] > button {
@@ -124,7 +118,6 @@ if st.session_state.page == "landing":
             </style>
         """, unsafe_allow_html=True)
 
-        # Tips section
         st.markdown("""
         <div style='margin-top: 1.5rem; background-color: #e9f3fb; padding: 15px; border-radius: 10px; border-left: 4px solid #0068c9;'>
             <strong style='color: #0068c9; font-size: 14px;'>💡 Tips for First-Time Users:</strong><br>
@@ -138,14 +131,13 @@ if st.session_state.page == "landing":
         """, unsafe_allow_html=True)
     
     with image_col:
-        # Add more top padding to start image 1 line below the heading
         st.markdown("<div style='padding-top: 120px;'></div>", unsafe_allow_html=True)
         
-        # Display the hero image (scaled down to half size)
-        try:
-            st.image("assets/hero_image.png", use_container_width =True)
-        except:
-            # Fallback if image not found
+        # ✅ Updated hero image logic with absolute path
+        hero_path = os.path.join(os.path.dirname(__file__), "assets", "hero_image.png")
+        if os.path.exists(hero_path):
+            st.image(hero_path, use_container_width=True)
+        else:
             st.markdown("""
             <div style='background-color: #f7fafc; border: 2px dashed #cbd5e0; border-radius: 12px; 
                         height: 200px; width: 300px; display: flex; align-items: center; justify-content: center;
@@ -175,17 +167,12 @@ elif st.session_state.page == "portfolio":
 elif st.session_state.page == "support":
     support.run(st.session_state)
 
-# --- Render the Azure OpenAI Chatbot Popup on every page ---
-# Use try-except to handle import issues gracefully
+# --- Render the Azure OpenAI Chatbot Popup ---
 try:
     from modules.chatbot_popup import render_popup_chatbot
     render_popup_chatbot()
 except ImportError as e:
-    # Fallback if chatbot_popup module is not found
     st.error(f"Chatbot module not found: {e}")
     st.info("Please ensure 'chatbot_popup.py' is in the modules folder.")
 except Exception as e:
-    # Handle any other errors gracefully
     st.error(f"Error loading chatbot: {e}")
-    # You can add a simple fallback chatbot here if needed
-
