@@ -1,0 +1,47 @@
+# Wealth Whisperer – AI-Powered Personal Finance Assistant
+
+Wealth Whisperer is a prototype AI-driven financial planning tool tailored for the Irish market.  
+It helps users make informed, tax-efficient investment and retirement decisions through:
+- Personalized Risk Profiling (ML model based on behavioral finance)
+- Retirement Planning (Monte Carlo simulations with Irish-specific tax and pension rules)
+- Portfolio Allocation (asset class deep-dive with projected returns and tax simulations)
+- ETF Explorer (real-time market data, risk metrics, and return forecasts)
+- AI Chatbot (context-aware financial Q&A with RAG integration)
+
+---
+
+## Features
+- Risk Profiling Quiz – Classifies users into Conservative, Balanced, or Aggressive profiles.
+- Retirement Planner – Combines salary growth, contribution rates, and inflation-adjusted returns.
+- Portfolio Simulator – Models equities, bonds, and cash with tax impact visualisation.
+- ETF Calculator – Historical trends, volatility, Sharpe ratio, and Monte Carlo projections.
+- AI Chatbot – Answers user-specific finance questions using Azure OpenAI.
+
+---
+
+## Tech Stack
+- Frontend: [Streamlit](https://streamlit.io/)
+- Backend/Logic: Python (Pandas, NumPy, Matplotlib)
+- AI: Azure OpenAI with Retrieval-Augmented Generation (RAG)
+- Data Sources:
+  - CSO (Central Statistics Office) Earnings Data
+  - Yahoo Finance API
+  - Kaggle (risk profiling dataset)
+  - Irish State Pension data
+
+---
+
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/username/repository-name.git
+   cd repository-name
+2. Install dependencies
+  pip install -r requirements.txt
+
+Industry Partner
+Developed in collaboration with Decision Analytics, Dublin-based experts in AI-powered financial technology.
+
+Disclaimer
+This tool is for educational and demonstration purposes only and does not constitute financial advice.
+All projections and simulations are based on assumptions and historical data, which may not reflect future performance.
